@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: PokeApi
+  datasource:
+    url: jdbc:mysql://localhost:3306/pokeapi?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
