@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 @RestController 
-@RequestMapping ("/api/pokemon")
+@RequestMapping ("/api/v1/pokemons")
 @CrossOrigin 
 @AllArgsConstructor 
 public class PokemonController {
