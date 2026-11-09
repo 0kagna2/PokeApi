@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.vedrunaExample2.PokeApi.persistance.model.Pokemon;
 import com.vedrunaExample2.PokeApi.persistance.repository.PokemonRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 @Service 
 @AllArgsConstructor 
@@ -18,7 +20,7 @@ public class PokemonServiceImpl implements PokemonService {
     }
     @Override 
     public Pokemon getPokemonById(long id) {
-        return pokemonRepository.findById(id).orElseThrow(() -> new RuntimeException("Pokemon not found"));
+        return pokemonRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pokemon not found"));
     }
     @Override 
     public Pokemon createPokemon(Pokemon pokemon) {
@@ -28,16 +30,17 @@ public class PokemonServiceImpl implements PokemonService {
     public Pokemon updatePokemon(long id, Pokemon pokemon) {
        
        
-        Pokemon existingPokemon = pokemonRepository.findById(id).orElseThrow(() -> new RuntimeException("Pokemon not found"));
+        Pokemon existingPokemon = pokemonRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pokemon not found"));
         existingPokemon.setName(pokemon.getName());
         existingPokemon.setType(pokemon.getType());
         existingPokemon.setDescription(pokemon.getDescription());
+        existingPokemon.setImagenUrl(pokemon.getImagenUrl());
         return pokemonRepository.save(existingPokemon);
     }
     @Override
     public void deletePokemon(long id) {
         if (!pokemonRepository.existsById(id)) {
-            throw new RuntimeException("Pokemon not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pokemon not found");
         }
         pokemonRepository.deleteById(id);
     }
