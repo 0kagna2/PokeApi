@@ -22,11 +22,25 @@ public class PokemonController {
     private final PokemonStatsRepository statsRepository;
     private final AbilityRepository abilityRepository;
 
-    @GetMapping public ResponseEntity<List<Pokemon>> getAllPokemons() { return ResponseEntity.ok(pokemonService.getAllPokemons()); }
-    @GetMapping("/{id}") public ResponseEntity<Pokemon> getPokemonById(@PathVariable long id) { return ResponseEntity.ok(pokemonService.getPokemonById(id)); }
-    @PostMapping public ResponseEntity<Pokemon> createPokemon(@RequestBody Pokemon pokemon) { return ResponseEntity.status(HttpStatus.CREATED).body(pokemonService.createPokemon(pokemon)); }
-    @PutMapping("/{id}") public ResponseEntity<Pokemon> updatePokemon(@PathVariable long id, @RequestBody Pokemon pokemon) { return ResponseEntity.ok(pokemonService.updatePokemon(id, pokemon)); }
-    @DeleteMapping("/{id}") public ResponseEntity<Void> deletePokemon(@PathVariable long id) { pokemonService.deletePokemon(id); return ResponseEntity.noContent().build(); }
+    @GetMapping public ResponseEntity<List<Pokemon>> getAllPokemons() {
+        return ResponseEntity.ok(pokemonService.getAllPokemons()); 
+    }
+    
+    @GetMapping("/{id}") public ResponseEntity<Pokemon> getPokemonById(@PathVariable long id) { 
+        return ResponseEntity.ok(pokemonService.getPokemonById(id)); 
+    }
+    
+    @PostMapping public ResponseEntity<Pokemon> createPokemon(@RequestBody Pokemon pokemon) { 
+        return ResponseEntity.status(HttpStatus.CREATED).body(pokemonService.createPokemon(pokemon)); 
+    }
+   
+    @PutMapping("/{id}") public ResponseEntity<Pokemon> updatePokemon(@PathVariable long id, @RequestBody Pokemon pokemon) { 
+        return ResponseEntity.ok(pokemonService.updatePokemon(id, pokemon)); 
+    }
+    
+    @DeleteMapping("/{id}") public ResponseEntity<Void> deletePokemon(@PathVariable long id) { 
+        pokemonService.deletePokemon(id); return ResponseEntity.noContent().build(); 
+    }
 
     @PostMapping("/{id}/stats")
     public ResponseEntity<PokemonStats> createStats(@PathVariable Long id, @RequestBody PokemonStats stats) {
@@ -35,11 +49,13 @@ public class PokemonController {
         stats.setId(null); stats.setPokemon(pokemon);
         return ResponseEntity.status(HttpStatus.CREATED).body(statsRepository.save(stats));
     }
+   
     @GetMapping("/{id}/stats")
     public ResponseEntity<PokemonStats> getStats(@PathVariable Long id) {
         requirePokemon(id);
         return ResponseEntity.ok(statsRepository.findByPokemonId(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stats not found")));
     }
+   
     @PutMapping("/{id}/stats")
     public ResponseEntity<PokemonStats> updateStats(@PathVariable Long id, @RequestBody PokemonStats request) {
         requirePokemon(id);
@@ -56,6 +72,7 @@ public class PokemonController {
         pokemon.getAbilities().add(ability); pokemonRepository.save(pokemon);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+   
     @DeleteMapping("/{id}/abilities/{abilityId}")
     public ResponseEntity<Void> removeAbility(@PathVariable Long id, @PathVariable Long abilityId) {
         Pokemon pokemon = requirePokemon(id);
@@ -63,6 +80,7 @@ public class PokemonController {
         if (pokemon.getAbilities() == null || !pokemon.getAbilities().remove(ability)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ability is not assigned to this Pokemon");
         pokemonRepository.save(pokemon); return ResponseEntity.noContent().build();
     }
+   
     @GetMapping("/{id}/abilities")
     public ResponseEntity<Set<Ability>> getAbilities(@PathVariable Long id) {
         Pokemon pokemon = requirePokemon(id);
