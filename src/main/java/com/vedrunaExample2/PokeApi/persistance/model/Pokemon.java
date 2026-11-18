@@ -19,24 +19,21 @@ import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 
 @Entity 
-@Table (name = "pokemons")
+@Table (name = "pokemon")
 @Data 
 @NoArgsConstructor 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Pokemon {
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name = "pokemon_id")
+    @Column (name = "id")
     @EqualsAndHashCode.Include
     long id;
 
-    @Column (name = "pokemon_name")
+    @Column (name = "name", nullable = false, length = 45)
     String name;
 
-    @Column (name = "pokemon_description")
-    String description;
-
-    @Column (name = "pokemon_type")
+    @Column (name = "`type`", length = 45)
     String type;
 
     @Column(name = "imagen_url")

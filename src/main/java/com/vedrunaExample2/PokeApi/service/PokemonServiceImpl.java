@@ -33,7 +33,7 @@ public class PokemonServiceImpl implements PokemonService {
         Pokemon existingPokemon = pokemonRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pokemon not found"));
         existingPokemon.setName(pokemon.getName());
         existingPokemon.setType(pokemon.getType());
-        existingPokemon.setDescription(pokemon.getDescription());
+        existingPokemon.setImagenUrl(pokemon.getImagenUrl());
         existingPokemon.setImagenUrl(pokemon.getImagenUrl());
         return pokemonRepository.save(existingPokemon);
     }

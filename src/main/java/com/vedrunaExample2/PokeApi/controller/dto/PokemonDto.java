@@ -7,5 +7,6 @@ public class PokemonDto {
     private String name;
     private long id; 
     private String type;
-    private String description;
+    private String imagenUrl;
+    private Long trainerId;
 }

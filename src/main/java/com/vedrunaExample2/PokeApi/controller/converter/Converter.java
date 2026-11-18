@@ -10,7 +10,8 @@ public class Converter {
         dto.setName(pokemon.getName());
         dto.setId(pokemon.getId());
         dto.setType(pokemon.getType());
-        dto.setDescription(pokemon.getDescription());
+        dto.setImagenUrl(pokemon.getImagenUrl());
+        dto.setTrainerId(pokemon.getTrainerId());
         return dto;
     }
     public Pokemon convertToEntity(PokemonDto dto) {
@@ -18,7 +19,7 @@ public class Converter {
         pokemon.setName(dto.getName());
         pokemon.setId(dto.getId());
         pokemon.setType(dto.getType());
-        pokemon.setDescription(dto.getDescription());
+        pokemon.setImagenUrl(dto.getImagenUrl());
         return pokemon;
     }
 
